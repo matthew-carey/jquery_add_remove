@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery .append() and .remove() demo</title>
+    <style type="text/css">
+      body{
+        font-family:Arial,sans-serif;
+      }
+
+      #container {
+        width:600px;
+        margin:10px auto !important;
+      }
+
+      #selectorContainer, #selectorContainerAlt, #selectorContainer3{
+        width:500px;
+        overflow:hidden;
+        border:1px solid #ccc;
+        padding:8px;
+        background-color:#eee;
+      }
+
+      /* Option #2 - Keep the height of the container consistent */
+      #selectorContainerAlt, #selectorContainer3{
+        min-height:200px;
+        height:200px;
+        max-height:200px;
+      }
+
+      #left, #leftAlt, #right, #rightAlt, #left3, #right3{
+        border:1px solid #ddd;
+        width:200px;
+        padding:6px;
+        margin:0px 6px;
+        float:left;
+        background-color:#fff;
+      }
+
+      /* Option #2 and #3 - Limit the height of the boxes and show scroll bars if needed */
+      #leftAlt, #rightAlt, #left3, #right3{
+        min-height:136px;
+        height:136px;
+        max-height:136px;
+        overflow:auto;
+      }
+
+      /* Option #2 and #3 - Adjust the spacing of the paragraphs for better display */
+      #leftAlt p, #rightAlt p, #left3 p, #right3 p{
+        margin:2px auto;
+        padding:2px;
+      }
+
+      .unselectable_heading {
+        font-weight:bold;
+        text-decoration:underline;
+      }
+
+      /* Used in Option #3 */
+      .pickList_subHeading{
+        font-style:italic;
+        color:blue;
+      }
+
+      .selected{
+        background-color:#6bf616; /* neon green */
+      }
+
+      /* Used in Option #3 */
+      .alreadySelected{
+        color:#ccc;
+      }
+
+      #add, #remove, #add3, #remove3{
+        border:1px solid #ddd;
+        color:#fff;
+        width:200px;
+        padding:6px;
+        margin:12px 6px;
+        float:left;
+        cursor:pointer;
+        text-align:center;
+      }
+
+      #add, #add3 {
+        background-color:green;
+      }
+
+      #remove, #remove3{
+        background-color:red;
+      }
+
+      #selectedToppings, #selectedToppingsAlt, #selectedToppings3 {
+        cursor:not-allowed;
+        background-color:#dedede;
+        width:300px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="container">
+  <h2>Pizza Topping Choices</h2>
+  <hr />
+<!-- BEGIN OPTION #1 -->
+  <h4>Option # 1 - Add/Remove on Item Click.</h4>
+  <p><em>Max. 2</em></p>
+  <div id="selectorContainer">
+    <div id="left">
+      <p class="unselectable_heading">Available</p>
+      <p class="selectItem">Black Olive</p>
+      <p class="selectItem">Green Peppers</p>
+      <p class="selectItem">Pepperoni</p>
+      <p class="selectItem">Sausage</p>
+    </div>
+
+    <div id="right">
+      <p class="unselectable_heading">Chosen</p>
+    </div>
+  </div>
+
+  <p>
+  <label>Read-only list of selected toppings:</label>
+  <input type="text" readonly name="selectedToppings" id="selectedToppings" />
+  </p>
+<!-- END OPTION #1 -->
+
+<hr />
+
+<!-- BEGIN OPTION #2 -->
+<h4>Option # 2 - Select Multiple Items on Click.  Add/Remove on Button Click.</h4>
+<p><em>Max. 4</em></p>
+  <div id="selectorContainerAlt">
+    <div id="leftAlt">
+      <p class="unselectable_heading">Available</p>
+      <p class="selectItem">Black Olive</p>
+      <p class="selectItem">Canadian Bacon</p>
+      <p class="selectItem">Green Peppers</p>
+      <p class="selectItem">Mushrooms</p>
+      <p class="selectItem">Pepperoni</p>
+      <p class="selectItem">Sausage</p>
+      <p class="selectItem">Tomatoes</p>
+    </div>
+
+    <div id="rightAlt">
+      <p class="unselectable_heading">Chosen</p>
+    </div>
+    <br style="clear:both;" />
+    <p id="add">Add to 'Chosen' &rarr;</p>
+    <p id="remove">&larr; Remove from 'Chosen'</p>
+  </div>
+
+  <p>
+  <label>Read-only list of selected toppings:</label>
+  <input type="text" readonly name="selectedToppingsAlt" id="selectedToppingsAlt" />
+  </p>
+<!-- END OPTION #2 -->
+
+<hr />
+
+<!-- BEGIN OPTION #3 -->
+<h4>Option # 3 - Select Multiple Items on Click.  Add/Disable on Left Button Click.  Remove/Re-Enable on Right Button Click</h4>
+<p><em>Max. 4</em></p>
+  <div id="selectorContainer3">
+    <div id="left3">
+      <p class="unselectable_heading">Available</p>
+      <p class="pickList_subHeading">Veggies</p>
+        <p class="selectItem">Black Olive</p>
+        <p class="selectItem">Green Peppers</p>
+        <p class="selectItem">Mushrooms</p>
+        <p class="selectItem">Tomatoes</p>
+      <p class="pickList_subHeading">Meats</p>
+        <p class="selectItem">Canadian Bacon</p>
+        <p class="selectItem">Pepperoni</p>
+        <p class="selectItem">Sausage</p>
+    </div>
+
+    <div id="right3">
+      <p class="unselectable_heading">Chosen</p>
+    </div>
+    <br style="clear:both;" />
+    <p id="add3">Add to 'Chosen' &rarr;</p>
+    <p id="remove3">&larr; Remove from 'Chosen'</p>
+  </div>
+
+  <p>
+  <label>Read-only list of selected toppings:</label>
+  <input type="text" readonly name="selectedToppings3" id="selectedToppings3" />
+  </p>
+<!-- END OPTION #3 -->
+
+  </div> <!-- END CONTAINER DIV -->
+
+<!-- JavaScript -->
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+  // BEGIN OPTION #1 FUNCTIONALITY
+
+  // Function to update the read-only list
+  function updateToppings(){
+    var chosenOptions=[];
+    $('#right .selectItem').each(function (i){
+      chosenOptions.push( $(this).text() );
+    });
+    var chosenOptionString=chosenOptions.toString();
+    $('#selectedToppings').val(chosenOptionString);
+  }
+
+  // Move item from left box to right box on click, then update read-only list.
+  $("#left").on('click','.selectItem',function(){
+    var howManyInRight=$('#right .selectItem').length;
+    var maxInRight=2;
+    if(howManyInRight < maxInRight){
+      $(this).remove();
+      $("#right").append(this);
+      updateToppings();
+    }
+    else{
+      alert("You can't add anymore to the right. The maximum is "+maxInRight);
+    }
+  });
+
+  // Move item from right box to left box on click, then update read-only list.
+  $("#right").on('click','.selectItem',function(){
+    $(this).remove();
+    $("#left").append(this);
+    updateToppings();
+  });
+  // END OPTION #1 FUNCTIONALITY
+
+  // BEGIN OPTION #2 FUNCTIONALITY
+
+  // Add/remove the 'selected' css class depending on current state. Used for both left and right boxes
+  $("#leftAlt").on('click','.selectItem',function(){
+    var howManyInRight = $('#rightAlt .selectItem').length;
+    var maxInRight = 4;
+    var maxFromLeft = maxInRight-howManyInRight;
+    var howManySelected = $('#leftAlt .selected').length;
+
+    if( $(this).hasClass('selected') ){ // item is currently selected, unselect it
+      $(this).toggleClass('selected');
+    }
+    else{ // item isn't selected yet, check counts to see if we can add it
+      if(howManySelected < maxFromLeft){
+        $(this).toggleClass('selected');
+      }
+      else{
+        alert("You've picked too many things. You have to stop. The right box is limited to "+maxInRight+" items.");
+      }
+    }
+  });
+
+  $('#rightAlt').on('click','.selectItem',function(){
+    $(this).toggleClass('selected');
+  });
+
+  // The same as the counterpart function for Option #1, but the selectors/targets are updated
+  function updateToppingsAlt(){
+    var chosenOptions=[];
+    $('#rightAlt .selectItem').each(function (i){
+      chosenOptions.push( $(this).text() );
+    });
+    var chosenOptionString=chosenOptions.toString();
+    $('#selectedToppingsAlt').val(chosenOptionString);
+  }
+
+  // Looks for and adds/removes any selected options depending on which button was clicked
+  $(document).on('click','#add, #remove',function(){
+    var whoCalledThisFunction=$(this).attr('id');
+    var fromID="#";
+    var toID="#";
+    var actionVerb="";
+
+    switch(whoCalledThisFunction){
+      case 'add':
+        fromID+="leftAlt";
+        toID+="rightAlt";
+        actionVerb="Added";
+        break;
+      case 'remove':
+        fromID+="rightAlt";
+        toID+="leftAlt";
+        actionVerb="Removed";
+        break;
+    }
+    var howManySelected = $(fromID+' .selected').length;
+    if(howManySelected > 0){
+      $(fromID+' .selected').each(function (i){
+          $(this).removeClass('selected');
+          $(this).remove();
+          $(toID).append(this);
+      });
+      updateToppingsAlt();
+      alert(actionVerb+" "+howManySelected+" item(s)."); // This alert() is optional.
+    }else{ // This else{} and its alert() are optional.
+      alert("You haven't selected any items to "+whoCalledThisFunction+".")
+    }
+  });
+  // END OPTION #2 FUNCTIONALITY
+
+  // BEGIN OPTION #3 FUNCTIONALITY
+
+  // Add/remove the 'selected' css class depending on current state. Used for both left and right boxes
+  $("#left3").on('click','.selectItem',function(){
+    if( !$(this).hasClass('alreadySelected') ){ // can't select it if it's already in the right box
+      var howManyInRight = $('#right3 .selectItem').length;
+      var maxInRight = 4;
+      var maxFromLeft = maxInRight-howManyInRight;
+      var howManySelected = $('#left3 .selected').length;
+
+      if( $(this).hasClass('selected') ){ // item is currently selected, unselect it
+        $(this).toggleClass('selected');
+      }
+      else{ // item isn't selected yet, check counts to see if we can add it
+        if(howManySelected < maxFromLeft){
+          $(this).toggleClass('selected');
+        }
+        else{
+          alert("You've picked too many things. You have to stop. The right box is limited to "+maxInRight+" items.");
+        }
+      }
+    }
+  });
+
+  $('#right3').on('click','.selectItem',function(){
+    $(this).toggleClass('selected');
+  });
+
+  // The same as the counterpart function for Option #1, but the selectors/targets are updated
+  function updateToppings3(){
+    var chosenOptions=[];
+    $('#right3 .selectItem').each(function (i){
+      chosenOptions.push( $(this).text() );
+    });
+    var chosenOptionString=chosenOptions.toString();
+    $('#selectedToppings3').val(chosenOptionString);
+  }
+
+  // Looks for and adds/removes any selected options depending on which button was clicked
+  $(document).on('click','#add3, #remove3',function(){
+    var whoCalledThisFunction=$(this).attr('id');
+    var fromID="#";
+    var toID="#";
+    var actionVerb="";
+
+    switch(whoCalledThisFunction){
+      case 'add3':
+        fromID+="left3";
+        toID+="right3";
+        actionVerb="Added";
+        break;
+      case 'remove3':
+        fromID+="right3";
+        toID+="left3";
+        actionVerb="Removed";
+        break;
+    }
+    var howManySelected = $(fromID+' .selected').length;
+    if(howManySelected > 0){
+      $(fromID+' .selected').each(function (i){
+          if(whoCalledThisFunction=='add3'){
+            $(this).removeClass('selected');
+            var clone=$(this).clone();
+            $(this).addClass('alreadySelected');
+            $(toID).append(clone);
+          }
+          else{
+            $(this).removeClass('selected');
+            var currentText=$(this).text();
+            $(toID+' .alreadySelected').each(function (i){
+              if( $(this).text()==currentText ){
+                $(this).removeClass('alreadySelected');
+              }
+            });
+            $(this).remove();
+          }
+      });
+      updateToppings3();
+      alert(actionVerb+" "+howManySelected+" item(s)."); // This alert() is optional.
+    }else{ // This else{} and its alert() are optional.
+      alert("You haven't selected any items to "+whoCalledThisFunction+".")
+    }
+  });
+  // END OPTION #3 FUNCTIONALITY
+  </script>
+<!-- END JavaScript -->
+  </body>
+</html>
